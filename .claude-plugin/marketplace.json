@@ -1,0 +1,23 @@
+{
+  "name": "agent007-marketplace",
+  "owner": {
+    "name": "Sebastian G",
+    "email": "contact@agent007.dev"
+  },
+  "metadata": {
+    "description": "Agent007 - Intelligent Development Orchestration",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "agent007",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/SebastianDevps/agent007.git"
+      },
+      "description": "5 expert agents, 17 skills, auto task routing, 85-92% token optimization, TDD/debugging workflows",
+      "version": "2.0.0",
+      "strict": true
+    }
+  ]
+}
