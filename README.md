@@ -4,6 +4,25 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 
 ---
 
+```
+╔════════════════════════════════════════════════════════════════════╗
+║                                                                    ║
+║   _  ___  ___ _  _  ____  ___  ___  _____                          ║
+║  /_\/ __ | _ | \| ||_  _|/ _ \/ _ \| __ /                          ║
+║ / _ \ (_ | _ | .` | | | | (_)| (_)| /  /                           ║
+║/_/ \_\___|___|_|\_| |_|  \___/\___//_ /                            ║
+║                                                                    ║
+║  Autonomous AI Development Team · v4.1 · by Sebastian Guerra       ║
+║  5 agents · 41 skills · 16 commands                                ║
+║                                                                    ║
+║  ▸ /dev "task"         → auto-classifies & routes                  ║
+║  ▸ /consult "question" → expert consultation                       ║
+║  ▸ /ralph-loop "task"  → autonomous loop until COMPLETE            ║
+║  ▸ /prompt-gen         → convert /consult output to /dev prompt    ║
+║                                                                    ║
+╚════════════════════════════════════════════════════════════════════╝
+```
+
 ## Installation
 
 ### Step 1: Add the Marketplace
