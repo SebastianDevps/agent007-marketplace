@@ -15,8 +15,8 @@
         "source": "url",
         "url": "https://github.com/SebastianDevps/agent007.git"
       },
-      "description": "5 expert agents, 17 skills, auto task routing, 85-92% token optimization, TDD/debugging workflows",
-      "version": "2.0.0",
+      "description": "5 expert agents, 41 skills, 16 commands — auto task routing, autonomous ralph loop, cross-platform (macOS/Linux/Windows)",
+      "version": "4.1.0",
       "strict": true
     }
   ]

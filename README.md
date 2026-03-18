@@ -1,10 +1,10 @@
 # Agent007 Marketplace
 
-Official marketplace for Agent007 plugin.
+Official marketplace for Agent007 — autonomous AI development orchestration for Claude Code CLI.
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Step 1: Add the Marketplace
 
@@ -18,47 +18,9 @@ Official marketplace for Agent007 plugin.
 /plugin install agent007@agent007-marketplace
 ```
 
-**Done!** Agent007 is now available in all your projects. ✅
+**Done!** On first session, Agent007 shows a welcome banner in your terminal. From there, all commands are available.
 
----
-
-## 🎯 What You Get
-
-After installation:
-
-### 5 Expert Agents
-- **backend-db-expert** (Opus) - APIs, NestJS, databases, distributed systems
-- **frontend-ux-expert** (Sonnet) - React, Next.js, UX, performance
-- **platform-expert** (Sonnet) - CI/CD, Docker, testing, quality gates
-- **product-expert** (Opus) - Product discovery, roadmap planning
-- **security-expert** (Opus) - OWASP, threat modeling, compliance
-
-### 17 Active Skills
-
-```bash
-/agent007:consult "question"              # Intelligent consultation
-/agent007:architecture-review             # Deep architecture analysis
-/agent007:api-design-principles           # REST API best practices
-/agent007:resilience-patterns             # Circuit breakers, retry logic
-/agent007:frontend-design                 # High-quality UI design
-/agent007:review                          # NestJS + TypeORM code review
-/agent007:tdd                             # Test-Driven Development
-/agent007:plan                            # Feature decomposition
-# ... and 9 more
-```
-
----
-
-## 📊 Token Optimization (85-92% Reduction)
-
-- **Lazy Skill Loading**: 60K → 10K tokens
-- **Skill Summaries**: 100-line summaries vs 650+ lines
-- **Prompt Caching**: 67% additional savings
-- **Cost Savings**: ~$225/month (average usage)
-
----
-
-## 🔄 Updates
+### Updates
 
 ```bash
 /plugin update agent007
@@ -66,19 +28,81 @@ After installation:
 
 ---
 
-## 📚 Documentation
+## What You Get
+
+### 4 Master Commands
+
+```bash
+/dev "task"              # Auto-classifies complexity, selects workflow, executes autonomously
+/consult "question"      # Routes to the right expert agent with skill injection
+/ralph-loop "task"       # Autonomous loop — iterates until task is verifiably complete
+/prompt-gen "objective"  # Converts /consult output into a structured executable prompt
+```
+
+### 5 Expert Agents
+
+| Agent | Model | Domain |
+|-------|-------|--------|
+| `backend-db-expert` | Opus | APIs, NestJS, TypeORM, databases, distributed systems |
+| `security-expert` | Opus | OWASP, JWT, threat modeling, GDPR, SOC2 |
+| `frontend-ux-expert` | Sonnet | React, Next.js, UX, accessibility, design systems |
+| `platform-expert` | Sonnet | CI/CD, Docker, testing, quality gates |
+| `product-expert` | Opus | Product discovery, roadmap, user stories |
+
+### 41 Skills — auto-injected by context
+
+Grouped by domain: `api-design-principles` · `architecture-patterns` · `resilience-patterns` · `security-review` · `nestjs-code-reviewer` · `react-best-practices` · `frontend-design` · `scenario-driven-development` · `systematic-debugging` · `verification-before-completion` · `writing-plans` · `subagent-driven-development` · `deep-research` · `commit` · `pull-request` · `changelog` · and 25 more.
+
+### Autonomous Workflows
+
+```
+/dev "task"
+ ├── Simple  → implement → verify → done
+ ├── Medium  → plan → subagents per task → review → branch options
+ └── Complex → brainstorm → worktree → plan → subagents + ralph loop
+```
+
+### Ralph Loop — iterate until complete
+
+Claude's natural behavior is to stop when it thinks it's done. Ralph intercepts the Stop hook, checks for `<promise>COMPLETE</promise>`, and re-injects continuation context until all success criteria are met.
+
+```bash
+/ralph-loop "Build kanban board with Next.js + Tailwind"
+# Requirements: localStorage, Todo/In Progress/Done columns, full CRUD
+# Success: npm run build → 0 errors, npm run lint → 0 warnings
+# Output <promise>COMPLETE</promise> when done.
+--max-iterations 30
+```
+
+---
+
+## Platform
+
+**macOS · Linux · Windows** — all hooks are Python 3 or Node.js, no bash dependencies.
+
+---
+
+## Honest Comparison
+
+| Capability | Claude Code vanilla | Agent007 |
+|---|:---:|:---:|
+| Complexity-based routing (simple/medium/complex) | ❌ | ✅ `/dev` |
+| Loop until verified complete | ❌ | ✅ Ralph |
+| Specialized agents by domain | ❌ | ✅ 5 experts |
+| Skill injection on queries | ❌ | ✅ `/consult` |
+| SDD enforcement (gate, not suggestion) | ❌ | ✅ hook |
+| Subagents with clean context per task | ❌ | ✅ |
+
+Token cost with Ralph active: 2-3x single-pass. Use it when incomplete tasks cost more than extra tokens.
+
+---
+
+## Documentation
 
 - **GitHub**: https://github.com/SebastianDevps/agent007
-- **Installation Guide**: Full README with examples
 - **License**: MIT
+- **Author**: Sebastian Guerra
 
 ---
 
-## 📞 Support
-
-- Issues: https://github.com/SebastianDevps/agent007/issues
-- Discussions: https://github.com/SebastianDevps/agent007/discussions
-
----
-
-**Version**: 2.0.0 | **License**: MIT
+**Version**: 4.1.0 | `41 skills` · `5 agents` · `16 commands`
