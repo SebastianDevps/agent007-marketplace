@@ -1,26 +1,26 @@
 # Agent007 Marketplace
 
-Official marketplace for Agent007 — autonomous AI development orchestration for Claude Code CLI.
+Official marketplace for Agent007 — autonomous AI development orchestration for Claude Code.
 
 ---
 
 ```
-╔════════════════════════════════════════════════════════════════════╗
-║                                                                    ║
-║   _  ___  ___ _  _  ____  ___  ___  _____                          ║
-║  /_\/ __ | _ | \| ||_  _|/ _ \/ _ \| __ /                          ║
-║ / _ \ (_ | _ | .` | | | | (_)| (_)| /  /                           ║
-║/_/ \_\___|___|_|\_| |_|  \___/\___//_ /                            ║
-║                                                                    ║
-║  Autonomous AI Development Team · v4.1 · by Sebastian Guerra       ║
-║  5 agents · 41 skills · 16 commands                                ║
-║                                                                    ║
-║  ▸ /dev "task"         → auto-classifies & routes                  ║
-║  ▸ /consult "question" → expert consultation                       ║
-║  ▸ /ralph-loop "task"  → autonomous loop until COMPLETE            ║
-║  ▸ /prompt-gen         → convert /consult output to /dev prompt    ║
-║                                                                    ║
-╚════════════════════════════════════════════════════════════════════╝
+╔═══════════════════════════════════════════════════════════════════╗
+║                                                                   ║
+║   _  ___  ___ _  _  ____  ___  ___  _____                         ║
+║  /_\/ __ | _ | \| ||_  _|/ _ \/ _ \| __ /                         ║
+║ / _ \ (_ | _ | .` | | | | (_)| (_)| /  /                          ║
+║/_/ \_\___|___|_|\_| |_|  \___/\___//_ /                           ║
+║                                                                   ║
+║  Autonomous AI Development Orchestration · v5.0.0                 ║
+║  8 agents · 25+ skills · 28 hooks · 10 OpenClaw primitives        ║
+║                                                                   ║
+║  ▸ /dev "task"         → auto-classifies & routes                 ║
+║  ▸ /consult "question" → expert consultation                      ║
+║  ▸ /ralph-loop "task"  → autonomous loop until COMPLETE           ║
+║  ▸ /orchestrate        → multi-agent workflow with HANDOFF        ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
 ```
 
 ## Installation
@@ -37,8 +37,6 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 /plugin install agent007@agent007-marketplace
 ```
 
-**Done!** On first session, Agent007 shows a welcome banner in your terminal. From there, all commands are available.
-
 ### Updates
 
 ```bash
@@ -49,49 +47,56 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 
 ## What You Get
 
-### 4 Master Commands
+### 3 Entry Commands
 
 ```bash
 /dev "task"              # Auto-classifies complexity, selects workflow, executes autonomously
 /consult "question"      # Routes to the right expert agent with skill injection
-/ralph-loop "task"       # Autonomous loop — iterates until task is verifiably complete
-/prompt-gen "objective"  # Converts /consult output into a structured executable prompt
+/orchestrate "workflow"  # Multi-agent chain with structured HANDOFF between agents
 ```
 
-### 5 Expert Agents
+### 8 Expert Agents
 
-| Agent | Model | Domain |
-|-------|-------|--------|
-| `backend-db-expert` | Opus | APIs, NestJS, TypeORM, databases, distributed systems |
-| `security-expert` | Opus | OWASP, JWT, threat modeling, GDPR, SOC2 |
-| `frontend-ux-expert` | Sonnet | React, Next.js, UX, accessibility, design systems |
-| `platform-expert` | Sonnet | CI/CD, Docker, testing, quality gates |
-| `product-expert` | Opus | Product discovery, roadmap, user stories |
+| Agent | Tool Profile | Domain |
+|-------|-------------|--------|
+| `backend-db-expert` | coding | APIs, NestJS, TypeORM, databases, distributed systems |
+| `security-expert` | minimal | OWASP, JWT, threat modeling, compliance |
+| `frontend-ux-expert` | coding | React, Next.js, UX, accessibility, GSAP |
+| `platform-expert` | coding | CI/CD, Docker, testing, quality gates |
+| `product-expert` | minimal | Product discovery, roadmap, user stories |
+| `code-reviewer` | minimal | CRITICAL/HIGH/MEDIUM/LOW taxonomy, 80% confidence filter |
+| `loop-operator` | full | Ralph loop control, stall detection, Steer Pattern |
+| `refactor-cleaner` | coding | Dead code removal via knip/depcheck/ts-prune |
 
-### 41 Skills — auto-injected by context
+### 28 Hooks — run automatically on every session
 
-Grouped by domain: `api-design-principles` · `architecture-patterns` · `resilience-patterns` · `security-review` · `nestjs-code-reviewer` · `react-best-practices` · `frontend-design` · `scenario-driven-development` · `systematic-debugging` · `verification-before-completion` · `writing-plans` · `subagent-driven-development` · `deep-research` · `commit` · `pull-request` · `changelog` · and 25 more.
+**Quality gates (always active):**
+`sdd-guard` · `pre-commit-guard` · `block-no-verify` · `safety-guard` · `config-guard` · `format-on-save` · `context-window-guard`
+
+**OpenClaw primitives (v5.0.0):**
+
+| Hook | Trigger | What it does |
+|------|---------|--------------|
+| `tool-loop-detection` | PostToolUse/all | Circuit breaker at 30 identical calls |
+| `context-engine` | PreToolUse/Agent | Token budget check before every spawn |
+| `mutation-guard` | PreToolUse/Write\|Edit | Deduplicates writes by content hash |
+| `memory-decay` | SessionStart | Archives stale memories (30/60 day decay) |
+| `tool-policy-guard` | PreToolUse/Write\|Edit | Enforces minimal/coding/full per agent |
+| `provider-rotation` | PreToolUse/Agent | Failover: opus → sonnet → haiku on cooldown |
+| `transcript-policy` | SubagentStart | Injects model-tier directive per subagent |
 
 ### Autonomous Workflows
 
 ```
 /dev "task"
- ├── Simple  → implement → verify → done
- ├── Medium  → plan → subagents per task → review → branch options
- └── Complex → brainstorm → worktree → plan → subagents + ralph loop
+ ├── Simple  → generate → verify → done
+ ├── Medium  → plan → wave-execute subagents → code-review → branch options
+ └── Complex → brainstorm → worktree → plan → wave-execute + ralph loop → human gate
 ```
 
-### Ralph Loop — iterate until complete
+**Yield Pattern** — tasks with no shared dependencies run in parallel (multiple Agent() calls in one response). Wave scheduler groups them automatically via topological sort.
 
-Claude's natural behavior is to stop when it thinks it's done. Ralph intercepts the Stop hook, checks for `<promise>COMPLETE</promise>`, and re-injects continuation context until all success criteria are met.
-
-```bash
-/ralph-loop "Build kanban board with Next.js + Tailwind"
-# Requirements: localStorage, Todo/In Progress/Done columns, full CRUD
-# Success: npm run build → 0 errors, npm run lint → 0 warnings
-# Output <promise>COMPLETE</promise> when done.
---max-iterations 30
-```
+**Steer Pattern** — when a subagent drifts (wrong direction, not stalled), loop-operator sends guidance via SendMessage before kill+restart. Preserves context and momentum.
 
 ---
 
@@ -107,21 +112,23 @@ Claude's natural behavior is to stop when it thinks it's done. Ralph intercepts 
 |---|:---:|:---:|
 | Complexity-based routing (simple/medium/complex) | ❌ | ✅ `/dev` |
 | Loop until verified complete | ❌ | ✅ Ralph |
-| Specialized agents by domain | ❌ | ✅ 5 experts |
-| Skill injection on queries | ❌ | ✅ `/consult` |
-| SDD enforcement (gate, not suggestion) | ❌ | ✅ hook |
-| Subagents with clean context per task | ❌ | ✅ |
+| Specialized agents by domain | ❌ | ✅ 8 experts |
+| Parallel subagent execution (Yield Pattern) | ❌ | ✅ |
+| Mid-flight agent guidance (Steer Pattern) | ❌ | ✅ |
+| Tool policy enforcement per agent | ❌ | ✅ 28 hooks |
+| Token loop detection + circuit breaker | ❌ | ✅ |
+| Memory temporal decay | ❌ | ✅ |
 
-Token cost with Ralph active: 2-3x single-pass. Use it when incomplete tasks cost more than extra tokens.
+Token cost with Ralph active: 2–3× single-pass. Use it when an incomplete task costs more than extra tokens.
 
 ---
 
 ## Documentation
 
-- **GitHub**: https://github.com/SebastianDevps/agent007
-- **License**: MIT
-- **Author**: Sebastian Guerra
+Full docs: https://github.com/SebastianDevps/agent007-doc  
+Plugin source: https://github.com/SebastianDevps/agent007  
+License: MIT · Author: Sebastian Guerra
 
 ---
 
-**Version**: 4.1.0 | `41 skills` · `5 agents` · `16 commands`
+**Version**: 5.0.0 · `8 agents` · `25+ skills` · `28 hooks` · `10 OpenClaw primitives`
