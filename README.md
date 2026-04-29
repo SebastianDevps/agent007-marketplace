@@ -12,8 +12,8 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 ║ / _ \ (_ | _ | .` | | | | (_)| (_)| /  /                          ║
 ║/_/ \_\___|___|_|\_| |_|  \___/\___//_ /                           ║
 ║                                                                   ║
-║  Autonomous AI Development Orchestration · v5.0.0                 ║
-║  8 agents · 25+ skills · 28 hooks · 10 OpenClaw primitives        ║
+║  Autonomous AI Development Orchestration · v5.1                   ║
+║  10 agents · 35 skills · 21 hooks · OpenClaw primitives           ║
 ║                                                                   ║
 ║  ▸ /dev "task"         → auto-classifies & routes                 ║
 ║  ▸ /consult "question" → expert consultation                      ║
@@ -73,7 +73,7 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 **Quality gates (always active):**
 `sdd-guard` · `pre-commit-guard` · `block-no-verify` · `safety-guard` · `config-guard` · `format-on-save` · `context-window-guard`
 
-**OpenClaw primitives (v5.0.0):**
+**OpenClaw primitives (v5.1):**
 
 | Hook | Trigger | What it does |
 |------|---------|--------------|
@@ -131,4 +131,4 @@ License: MIT · Author: Sebastian Guerra
 
 ---
 
-**Version**: 5.0.0 · `8 agents` · `25+ skills` · `28 hooks` · `10 OpenClaw primitives`
+**Version**: 5.1.0 · `10 agents` · `35 skills` · `21 hooks` · `OpenClaw primitives`
