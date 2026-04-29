@@ -12,7 +12,7 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 ║ / _ \ (_ | _ | .` | | | | (_)| (_)| /  /                          ║
 ║/_/ \_\___|___|_|\_| |_|  \___/\___//_ /                           ║
 ║                                                                   ║
-║  Autonomous AI Development Orchestration · v5.1                   ║
+║  Autonomous AI Development Orchestration · v5.1.1                 ║
 ║  10 agents · 35 skills · 21 hooks · OpenClaw primitives           ║
 ║                                                                   ║
 ║  ▸ /dev "task"         → auto-classifies & routes                 ║
@@ -131,4 +131,4 @@ License: MIT · Author: Sebastian Guerra
 
 ---
 
-**Version**: 5.1.0 · `10 agents` · `35 skills` · `21 hooks` · `OpenClaw primitives`
+**Version**: 5.1.1 · `10 agents` · `35 skills` · `21 hooks` · `OpenClaw primitives`
