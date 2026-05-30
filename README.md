@@ -1,4 +1,4 @@
-# Agent007 Marketplace
+# Agent007 Marketplace — v7 Release
 
 Official marketplace for Agent007 — autonomous AI development orchestration for Claude Code.
 
@@ -12,8 +12,8 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 ║ / _ \ (_ | _ | .` | | | | (_)| (_)| /  /                          ║
 ║/_/ \_\___|___|_|\_| |_|  \___/\___//_ /                           ║
 ║                                                                   ║
-║  Autonomous AI Development Orchestration · v6.0.0                 ║
-║  8 agents · 44 skills · 26 hooks · CI propia · 0 debt             ║
+║  Autonomous AI Development Orchestration · v7.0.0                 ║
+║  13 agents · 57 skills · 43 hooks · CI propia · 0 debt            ║
 ║                                                                   ║
 ║  ▸ /dev "task"         → auto-classifies & routes                 ║
 ║  ▸ /consult "question" → expert consultation                      ║
@@ -45,90 +45,73 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 
 ---
 
-## What's new in v6
+## What's new in v7
 
-- **Frontend agent ejecuta** — antes solo validaba. Ahora escribe código (Write/Edit/Bash + WebFetch). 4 modos explícitos: BUILDER (default) · PLANNER · CONSULTANT · REVIEWER (opt-in).
-- **Anti-convergence inevitable** — `frontend-discovery-gate` (PreToolUse hook) bloquea writes en `.tsx/.jsx/.css/.html/.svelte/.vue/.astro` sin un discovery output reciente. No depende del LLM recordar — está en la herramienta.
-- **8 skills nuevas accionables** — `discovery-before-code`, `shadcn-component-install`, `a11y-contrast-check` (script Node.js zero-deps WCAG), `design-tokens-extract`, `design-system-doc` (9-section schema), `page-transitions-barba`, `ios-hig-mobile`, `spline-3d-embed`.
-- **CI propia + debt register vacío** — 6-job GitHub workflow valida settings.json, frontmatter, hook syntax, line caps, references resolvable. `.line-cap-exemptions` está vacío: cero archivos eager > 200 líneas.
-- **Eager-loaded total reducido 84%** (~7300 → 1195 líneas). Auto-inject overhead reducido 81% (1239 → 237 líneas por sesión).
-- **Telemetría persistente + cross-session recovery** — `context-tick.py` (SessionStart + PostToolUse + Stop) escribe a `.sdlc/state/context-budget.jsonl`. `session-recover.py` lee tail al arrancar, emite resumen de sesión previa si <4h. `waste-report.py` audit: top files, hit rate, p95 tokens, never-loaded references.
-- **Lifecycle scripts** — `verify.sh`, `install.sh`, `uninstall.sh`, `sync-to-public.sh`, `test-hooks.py` (13 fixtures regression), `waste-report.py`.
+- **13 expert agents** — specialized routing per domain (backend, frontend, platform, security, product, observability, incident response). New: `docs-architect`, `error-coordinator`, `incident-responder`, `observability-engineer`, `architect-reviewer` for cross-module consistency validation.
+- **57 skills** — flat registry (depth-1), all callable. New domain skills: `domain-behavioral-contracts` (DECLARE_BEFORE_ACT, SCOPE_IS_CONTRACT, SIMPLEST_SOLUTION, VERIFY_NOT_ASSUME), `dispatching-parallel-agents`, plus refined SDD gates (sdd-analyze, sdd-checklist, sdd-debate, sdd-verify-diff).
+- **43 deterministic hooks** — across 7 event channels. V7.3 hardening: atomic writes, concurrent file locks, idempotency deduping. New: `tool-policy-guard` (minimal/coding/full per agent), `context-engine` (token budget pre-dispatch), `transcript-policy` (model assignment per subagent tier).
+- **SDD pipeline with 4 auto-gates** — proposal → spec (checklist-gate) → design (debate-gate) → tasks → apply → verify (diff-verify-gate) → archive. Each gate has explicit verdict (PASS/WARN/FAIL/blocked/findings/clean).
+- **V7.3 auto-loop hardened** — fail-and-retry with structural feedback, convergence detection (2× identical failure signature → escalate), wall-clock watchdog (60 min), per-tier×per-trigger budget. Parallel fan-out with worktree isolation for multi-domain apply waves.
+- **File-based state only** — no external backends. All SDD artifacts in `openspec/changes/<change>/`. Persistent feedback loop, cross-session recovery via `.sdlc/state/` directory.
+- **Behavioral contracts as identity** — DECLARE_BEFORE_ACT, SCOPE_IS_CONTRACT, SIMPLEST_SOLUTION, VERIFY_NOT_ASSUME embedded in `domain-behavioral-contracts` skill and auto-injected.
+- **First-run onboarding** — `/sdd-onboard` guided walkthrough using your real codebase (tech-stack detection, test-runner discovery, strict-TDD opt-in).
+- **Tool allowlist + executor classification** — PreToolUse hooks block hallucinated paths, enforce skill-level bash whitelist (shadcn pattern), classify writes as read-only / read-mostly / read-write per agent policy. Safety guard hardened with pipe data-flow detection.
 
 ---
 
 ## What You Get
 
-### 3 Entry Commands
+### 6 Entry Commands
 
 ```bash
 /dev "task"              # Auto-classifies complexity, routes inline or SDD
 /consult "question"      # Routes to the right expert agent with skill injection
+/ralph-loop "task"       # Autonomous loop until verified COMPLETE
 /orchestrate "workflow"  # Multi-agent chain with structured HANDOFF
+/prompt-gen "objective"  # Convert vague intent into precision prompt
+/security-scan          # OWASP + codebase audit
 ```
 
-### 8 Expert Agents
+### 13 Expert Agents
 
-| Agent | Tool Profile | Domain |
-|-------|-------------|--------|
-| `backend-db-expert` | coding | APIs, NestJS, TypeORM, databases, microservices |
-| `frontend-ux-expert` ⚡ | coding | **BUILDER** mode default — writes code, not reviews. React, Next.js, Tailwind, GSAP, shadcn, Spline, barba, iOS HIG. Anti-convergence gate enforced. |
-| `security-expert` | minimal | OWASP, JWT, threat modeling, compliance |
-| `platform-expert` | coding | CI/CD, Docker, Jest, Playwright, Kubernetes, monitoring |
-| `product-expert` | minimal | RICE/ICE, user stories, roadmap, AARRR |
-| `code-reviewer` | minimal | CRITICAL/HIGH/MED/LOW taxonomy, 80% confidence filter |
-| `loop-operator` | full | Ralph loop control, stall detection, Steer Pattern |
-| `refactor-cleaner` | coding | Dead code via knip/depcheck/ts-prune |
+| Agent | Domain |
+|-------|--------|
+| `backend-db-expert` | APIs, NestJS, TypeORM, databases, microservices, resilience patterns |
+| `frontend-ux-expert` | React, Next.js, Tailwind, GSAP, shadcn, Spline, barba, iOS HIG, component builders |
+| `security-expert` | OWASP, JWT, OAuth, threat modeling, compliance, encryption, auth |
+| `platform-expert` | CI/CD, Docker, Jest, Playwright, Kubernetes, monitoring, infra |
+| `product-expert` | RICE, user stories, roadmap, MVP, backlog prioritization |
+| `code-reviewer` | Quality checks (CRITICAL/HIGH/MED/LOW), 80% confidence filter, diff review |
+| `architect-reviewer` | Architecture review, design patterns, bounded contexts, module boundaries, technical debt |
+| `docs-architect` | Technical writing, API docs, onboarding, system overviews, design system documentation |
+| `incident-responder` | Outage response, P0/P1 triage, postmortems, runbooks, rollback strategies |
+| `observability-engineer` | Monitoring, metrics, traces, Prometheus, Grafana, OpenTelemetry, SLO/SLI |
+| `loop-operator` | Ralph loop control, stall detection, autonomous retries, steering patterns |
+| `refactor-cleaner` | Dead code removal, depcheck, knip, ts-prune, import cleanup |
+| `error-coordinator` | Cascading subagent failure recovery, retry orchestration, multi-agent error resolution |
 
-> Removed in v6: `architect` → use `Skill('architecture-patterns')`. `performance-optimizer` → use `Skill('performance-profiling')` (now a skill with 3 layer-specific protocol references).
+### 57 Skills
 
-### 44 Skills
+Organized by category:
 
-Organized by category, all with frontmatter contracts (`allowed-tools`, `canonical-sources`, `references`, `when.keywords`):
+- **Pipeline** (16): plan, generate, verify, brainstorming, tdd-workflow, subagent-driven-development, using-git-worktrees, finishing-a-development-branch, sop-reverse, adr-review, adr-write, prd-author, retrospective, issue-creation, spec, receiving-code-review
+- **Orchestration** (9): session-manager, ralph-loop-wrapper, iterative-retrieval, sdd-apply, sdd-debate, sdd-verify-diff, consult-decide, consult-critique, dispatching-parallel-agents
+- **Domain** (18): domain-api-design-principles, domain-architecture-patterns, domain-resilience-patterns, domain-nestjs-code-reviewer, domain-security-review, domain-react-best-practices, domain-frontend-design, domain-gsap, domain-discovery-before-code, domain-shadcn-component-install, domain-a11y-contrast-check, domain-design-tokens-extract, domain-design-system-doc, domain-page-transitions-barba, domain-ios-hig-mobile, domain-spline-3d-embed, domain-behavioral-contracts
+- **Quality Gates** (3): quality-gates-systematic-debugging, agent-self-diagnosis, quality-gates-performance-profiling
+- **Devrel** (1): devrel-api-documentation
+- **Product** (1): product-product-discovery
+- **Workflow Utils** (7): commit, pull-request, changelog, deep-research, search-first, rules-distill, skill-stocktake
+- **Meta** (1): writing-skills
 
-- **core/** (auto-inject): `quality-enforcement`, `banned-phrases`, `context-awareness`
-- **pipeline/**: `plan`, `generate`, `verify`, `tdd-workflow`, `subagent-driven-development`, `using-git-worktrees`, `finishing-a-development-branch`, `sop-reverse`, `brainstorming`
-- **orchestration/** (auto-inject): `session-manager`, `state-sync`, `iterative-retrieval`, `ralph-loop-wrapper`
-- **domain/**: `api-design-principles`, `architecture-patterns`, `resilience-patterns`, `nestjs-code-reviewer`, `security-review`, `react-best-practices`, `frontend-design`, `gsap`, `karpathy`, plus the 8 new frontend executors
-- **quality-gates/**: `systematic-debugging`, `agent-self-diagnosis`, `performance-profiling`
-- **workflow-utils/**: `commit`, `pull-request`, `changelog`, `deep-research`, `search-first`, `rules-distill`, `skill-stocktake`
-- **product/**, **devrel/**, **issue-creation/**: domain-specific entry points
+### 43 Hooks — run automatically every session
 
-### 26 Hooks — run automatically every session
-
-**Quality gates (always active):**
+**Auto-injected quality gates:**
 `sdd-guard` · `pre-commit-guard` · `block-no-verify` · `safety-guard` · `config-guard` · `format-on-save` · `context-window-guard`
 
-**Defensive guards:**
+**Defensive + discovery guards:**
+`path-existence-guard` · `tool-allowlist-guard` · `frontend-discovery-gate` · `context-tick` · `session-recover` · `mutation-guard` · `web-distill` · `tool-loop-detection` · `context-engine` · `memory-decay` · `tool-policy-guard` · `transcript-policy`
 
-| Hook | Trigger | What it does |
-|------|---------|--------------|
-| `path-existence-guard` ⭐ | PreToolUse/Edit\|Write\|Read | Blocks hallucinated paths |
-| `tool-allowlist-guard` ⭐ | PreToolUse/Bash | Skill-level bash whitelist (shadcn pattern) |
-| `frontend-discovery-gate` ⭐ | PreToolUse/Edit\|Write | Blocks visual writes without recent discovery output (TTL 30 min) |
-| `context-tick` ⭐ | SessionStart + PostToolUse + Stop | Persists telemetry to `.sdlc/state/context-budget.jsonl` |
-| `session-recover` ⭐ | SessionStart | Emits previous-session preamble if last activity <4h ago |
-| `mutation-guard` | PreToolUse/Write\|Edit | Deduplicates writes — defensive against bug retries |
-| `web-distill` | PreToolUse/WebFetch | Distills HTML + 24h URL cache |
-| `tool-loop-detection` | PostToolUse/all | Circuit breaker at 30 identical calls |
-| `context-engine` | PreToolUse/Agent | Token budget check before every spawn |
-| `memory-decay` | SessionStart | Archives stale memories (30/60 day) |
-| `tool-policy-guard` | PreToolUse/Write\|Edit | Enforces minimal/coding/full per agent |
-| `transcript-policy` | SubagentStart | Injects model-tier directive per subagent |
-
-⭐ = new in v6.
-
-### Lifecycle scripts
-
-```bash
-.claude/scripts/lifecycle/verify.sh                   # 5 checks (+ optional 6th: hook regression tests)
-.claude/scripts/lifecycle/test-hooks.py               # 13 fixture-based regression tests
-.claude/scripts/lifecycle/waste-report.py             # telemetry audit: top files, hit rate, p95
-.claude/scripts/lifecycle/install.sh /path/to/proj    # deploy to a project
-.claude/scripts/lifecycle/uninstall.sh /path/to/proj  # remove (preserves state)
-```
-
-CI gate (`.github/workflows/plugin-validate.yml`) runs the same 5 checks on every PR.
+Additional specialized hooks across SDD phases, routing, CLI, and telemetry.
 
 ### Autonomous Workflows
 
@@ -136,33 +119,27 @@ CI gate (`.github/workflows/plugin-validate.yml`) runs the same 5 checks on ever
 /dev "task"
  ├── Trivial      → generate → verify → done
  └── Substantial  → SDD pipeline (proposal → spec → design → tasks → apply → verify → archive)
+                    with 4 auto-gates (checklist, debate, analyze, diff-verify)
 ```
 
-**Yield Pattern** — independent tasks run in parallel (multiple `Agent()` calls per response). Wave scheduler groups via topological sort.
-
-**Steer Pattern** — drifting subagents get mid-flight guidance via SendMessage before kill+restart.
+**Parallel fan-out** — independent domain tasks run concurrently with worktree isolation. **Wave scheduling** — tasks grouped by dependency tiers via topological sort. **Steer Pattern** — drifting subagents receive mid-flight guidance via SendMessage.
 
 ---
 
-## Frontend executor (new in v6)
+## SDD Pipeline
 
-Antes el agente solo validaba — sus tools eran `[Read, Grep, Glob]`. Ahora es **builder**:
+### The Phases (each creates an artifact)
 
-```
-.claude/state/discovery-output.json
- ↑ written by Skill('discovery-before-code')
- ↓ read by frontend-discovery-gate hook (PreToolUse/Edit|Write)
+1. **Proposal** — user intent, scope, rough approach
+2. **Spec** → **Gate 1** (checklist): observable requirements, Given/When/Then scenarios
+3. **Design** → **Gate 2** (debate): competing architectural approaches, rationale, decision record
+4. **Tasks** → **Gate 3** (analyze): breakdown to 2-5min executable tasks with TDD steps, cross-artifact consistency check
+5. **Apply** → parallel subagent execution, auto-loop on test failure
+6. **Verify** → two-pass validation (evidence + spec compliance)
+7. **Archive** → final report, close change, persist to `openspec/changes/`
+8. **Optional Gate 4** (diff-verify): adversarial per-file review before archive
 
-If output missing or > 30 min old → write to .tsx/.css is BLOCKED.
-```
-
-The skill enforces 4 steps before any code:
-1. **Referent fetch** — real URL, not "modern dashboard"
-2. **Pick 1 of 11 extreme styles** (brutalist / cyberpunk / swiss / memphis / etc.) — anti-convergence
-3. **States table** (empty / loading / error / success / edge)
-4. **Tokens declared** (≤5 colors, ≤2 fonts)
-
-Then the executable skills take over: `shadcn-component-install`, `design-tokens-extract`, `a11y-contrast-check`, `page-transitions-barba`, `ios-hig-mobile`, `spline-3d-embed`, `design-system-doc`.
+All artifacts live in `openspec/changes/<change-name>/` — committable, shareable, auditable.
 
 ---
 
@@ -174,11 +151,11 @@ Then the executable skills take over: `shadcn-component-install`, `design-tokens
 
 ## Honest Comparison
 
-| Capability | Claude Code vanilla | Agent007 v6 |
+| Capability | Claude Code vanilla | Agent007 v7 |
 |---|:---:|:---:|
 | Complexity-based routing (trivial / substantial → SDD) | ❌ | ✅ `/dev` |
 | Loop until verified complete | ❌ | ✅ Ralph |
-| Specialized agents by domain | ❌ | ✅ 8 experts |
+| Specialized agents by domain (13 experts) | ❌ | ✅ |
 | Parallel subagent execution (Yield Pattern) | ❌ | ✅ |
 | Mid-flight agent guidance (Steer Pattern) | ❌ | ✅ |
 | Tool policy + bash allowlist per skill | ❌ | ✅ shadcn pattern |
@@ -191,6 +168,10 @@ Then the executable skills take over: `shadcn-component-install`, `design-tokens
 | Persistent telemetry + waste audit | ❌ | ✅ `context-tick` + `waste-report.py` |
 | Cross-session recovery (no PreCompact native) | ❌ | ✅ `session-recover` |
 | Debt register (explicit, validated) | ❌ | ✅ `.line-cap-exemptions` (currently empty) |
+| Behavioral contracts as identity | ❌ | ✅ 4 core contracts |
+| First-run tech-stack detection + TDD discovery | ❌ | ✅ `/sdd-onboard` |
+| SDD auto-gates (4 phases) | ❌ | ✅ checklist, debate, analyze, diff-verify |
+| File-based state (no backends) | ❌ | ✅ openspec/ + .sdlc/ |
 
 ---
 
@@ -202,4 +183,4 @@ Then the executable skills take over: `shadcn-component-install`, `design-tokens
 
 ---
 
-**Version**: 6.0.0 · `8 agents` · `44 skills` · `26 hooks` · `72 lazy-load references` · `0 eager-loaded violations` · `13 hook regression tests`
+**Version**: 7.0.0 · `13 agents` · `57 skills` · `43 hooks` · `4 SDD auto-gates` · `0 eager-loaded violations` · `behavioral-contracts-as-identity`
