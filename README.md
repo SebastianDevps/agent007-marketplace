@@ -12,7 +12,7 @@ Official marketplace for Agent007 — autonomous AI development orchestration fo
 ║ / _ \ (_ | _ | .` | | | | (_)| (_)| /  /                          ║
 ║/_/ \_\___|___|_|\_| |_|  \___/\___//_ /                           ║
 ║                                                                   ║
-║  Autonomous AI Development Orchestration · v7.0.2                 ║
+║  Autonomous AI Development Orchestration · v7.0.3                 ║
 ║  13 agents · 57 skills · 43 hooks · CI propia · 0 debt            ║
 ║                                                                   ║
 ║  ▸ /dev "task"         → auto-classifies & routes                 ║
@@ -183,4 +183,4 @@ All artifacts live in `openspec/changes/<change-name>/` — committable, shareab
 
 ---
 
-**Version**: 7.0.2 · `13 agents` · `57 skills` · `43 hooks` · `4 SDD auto-gates` · `0 eager-loaded violations` · `behavioral-contracts-as-identity`
+**Version**: 7.0.3 · `13 agents` · `57 skills` · `43 hooks` · `4 SDD auto-gates` · `0 eager-loaded violations` · `behavioral-contracts-as-identity`
